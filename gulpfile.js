@@ -2,7 +2,6 @@
 
 var gulp         = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
-    concat       = require('gulp-concat'),
     less         = require('gulp-less'),
     path         = require('path'),
     watch        = require('gulp-watch'),
@@ -17,25 +16,13 @@ gulp.task('html', function () {
 		.pipe(gulp.dest('dist'))
 		.pipe(reload({stream: true}));
 });
-/*
-gulp.task('css-frameworks', function () {
-	return gulp.src(['node_modules/lesshat/lesshat-prefixed.less',
-	                 'node_modules/normalize.css/normalize.css'])
-		.pipe(gulp.dest('src/styles/frameworks'))
-		.pipe(reload({stream: true}));
-});
-*/
-gulp.task('css', function () {
-	return gulp.src(['src/styles/style.less'])
+
+gulp.task('styles', function () {
+	return gulp.src(['src/styles/style.less', 'node_modules/normalize.css/normalize.css'])
 	    .pipe(rigger())
-	    .pipe(gulp.dest('dist/css'))
-    	.pipe(less({
-            paths: [ path.join(__dirname, 'less', 'includes') ]
-            }))
-		.pipe(autoprefixer({
-			browsers: ['last 5 versions'],
-			cascade: false
-		}))
+	    .pipe(less({
+          paths: [ path.join(__dirname, 'less', 'includes') ]
+        }))
 		.pipe(gulp.dest('dist/css'))
 		.pipe(reload({stream: true}));
 });
@@ -56,9 +43,11 @@ gulp.task('img', function () {
 
 
 gulp.task('watch', function(){
-    watch(['src/styles/*/*.less', 'src/styles/*.less'], function(event, cb) {
-        gulp.start(['css', 'js']);
-    });
+
+    watch( ['src/styles/*/*'], function(event, cb) {
+        gulp.start('styles');
+    }).on('change', browserSync.reload);
+    
     watch(['src/html/*/*.html', 'src/html/*.html'], function(event, cb) {
         gulp.start('html');
     });
@@ -82,4 +71,4 @@ gulp.task('server', function () {
     browserSync(config);
 });
 
-gulp.task('default', ['html', /*'css-frameworks',*/ 'css', 'img', 'js', 'server', 'watch']);
+gulp.task('default', ['html', 'styles', 'img', 'js', 'server', 'watch']);
