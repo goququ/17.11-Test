@@ -43,6 +43,7 @@ gulp.task('img', function () {
 
 gulp.task('bootstrap', function () {
 	return gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css', 
+					'node_modules/bootstrap/dist/css/bootstrap.min.css.map',
 					'node_modules/bootstrap/dist/js/bootstrap.min.js'])
 		.pipe(gulp.dest('dist/bootstrap'));
 });
