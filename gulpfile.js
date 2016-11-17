@@ -36,7 +36,7 @@ gulp.task('js', function () {
 
 
 gulp.task('img', function () {
-	return gulp.src(['src/img/files/*', 'src/img/i/*'], { base: 'src/img' })
+	return gulp.src(['src/img/files/*', 'src/img/i/*', 'src/img/svg/*'], { base: 'src/img' })
 		.pipe(gulp.dest('dist/img'))
 		.pipe(reload({stream: true}));
 });
@@ -50,7 +50,7 @@ gulp.task('bootstrap', function () {
 
 gulp.task('fonts', function () {
 	return gulp.src(['src/fonts/*', 'node_modules/bootstrap/fonts/*'])
-		.pipe(gulp.dest('dist/bootstrap/fonts'));
+		.pipe(gulp.dest('dist/fonts'));
 });
 
 
@@ -83,4 +83,4 @@ gulp.task('server', function () {
 	browserSync(config);
 });
 
-gulp.task('default', ['html', 'styles', 'img', 'js', 'bootstrap','fonts','server', 'watch']);
+gulp.task('default', ['html', 'styles', 'img', 'js','fonts','server', 'watch']);
